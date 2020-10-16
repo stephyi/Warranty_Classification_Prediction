@@ -6,12 +6,16 @@ from sklearn.preprocessing import StandardScaler, OneHotEncoder, RobustScaler
 from sklearn.compose import ColumnTransformer
 
 class Preprocessor():
-    def __init__(self,data):
+    """
+    This instantiate the class preprocessor which assist in preprocessing the data, it deals
+    with outliers, encode our categorical variables and scale our
+    """
+    def __init__(self, data):
         self.data = data
         self.column = data.columns
         self.numerical = [] 
         self.categorical = []
-       
+     
         
     
 
@@ -35,11 +39,14 @@ we would check if label was passed or not"""
         self.categorical= categorical
         return categorical, numerical
 
-
-    def _preprocess_data(self,categorical,numerical):
+    def _preprocess_data(self, categorical, numerical, preprocessor="RobustScaler"):
         """This function helps to encode the categorical data using One Hot encoding
-         and then Scale the numerical data using the well known Standard Scaler"""
-        numeric_transformer = Pipeline([('scaler', RobustScaler())])
+         and then Scale the numerical data using the well known Robust Scaler this help
+         so that our data is not affected by outliers"""
+        if preprocessor == "RobustScaler":   
+             numeric_transformer = Pipeline([('scaler', RobustScaler())])
+        else:
+            numeric_transformer = Pipeline([('scaler', StandardScaler())])
         categorical_transformer = Pipeline([('onehot', OneHotEncoder(sparse=False))])
         
         preprocessor = ColumnTransformer(
@@ -51,6 +58,10 @@ we would check if label was passed or not"""
         trans_fit  = transformed.fit_transform(self.data)
         label = self.label
         return trans_fit, label
+
+    
+        
+
 
     
         

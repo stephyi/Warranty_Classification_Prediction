@@ -1,0 +1,5 @@
+scripts/__pycache__
+notebook/.ipynb_checkpoints
+/home/mahveotm/Desktop/Project/PredictingLikelyCustomerPurchase/.gitignore
+notebook/newnotebook.ipynb
+__pycache__/
